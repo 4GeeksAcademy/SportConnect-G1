@@ -1,24 +1,21 @@
 from flask import Flask
-from flask_cors import CORS
-from src.models import db  # Asegúrate que esto apunta a tu archivo con db
-from auth import auth_routes
+from flask_sqlalchemy import SQLAlchemy
+import os
+
+from models import db  # Importa desde donde tengas tus modelos
 
 app = Flask(__name__)
-CORS(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///backend/database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///src/database.db"
+db.init_app(app)
 
-
-db.init_app(app)  # Importante para inicializar SQLAlchemy con Flask
-
-app.register_blueprint(auth_routes, url_prefix='/api')
+with app.app_context():
+    db.create_all()  # 🔥 Esto crea la base de datos y las tablas si no existen
 
 @app.route("/")
-def home():
+def index():
     return {"msg": "API funcionando correctamente"}
 
-# 👉 Esto crea la base de datos
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run(debug=True, port=5000)
