@@ -1,0 +1,25 @@
+Project aventura-social {
+    database_type: "PostgreSQL"
+}
+Table users {
+    id integer [pk, increment]
+    email varchar [unique, not null]
+    password varchar [not null]
+}
+
+Table events {
+    id integer [pk, increment]
+    title varchar
+    activity varchar
+    level varchar
+    duration varchar
+    departure varchar
+    creator_id integer [ref: > users.id]
+}
+
+Enum activity_type {
+    escalada
+    senderismo
+    mountain_bike
+    piraguismo
+}
