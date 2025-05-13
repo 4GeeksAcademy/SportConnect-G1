@@ -1,25 +1,45 @@
-Project aventura-social {
-    database_type: "PostgreSQL"
-}
-Table users {
-    id integer [pk, increment]
-    email varchar [unique, not null]
-    password varchar [not null]
+// Archivo: diagram.dbml
+
+Project aventura_social {
+  database_type: "PostgreSQL"
 }
 
-Table events {
-    id integer [pk, increment]
-    title varchar
-    activity varchar
-    level varchar
-    duration varchar
-    departure varchar
-    creator_id integer [ref: > users.id]
+// Tabla de usuarios
+Table usuarios {
+  id integer [pk, increment]
+  nombre varchar
+  email varchar [unique, not null]
+  password varchar
+  created_at timestamp [default: `now()`]
 }
 
-Enum activity_type {
-    escalada
-    senderismo
-    mountain_bike
-    piraguismo
+// Tabla de actividades (escalada, senderismo, etc.)
+Table actividades {
+  id integer [pk, increment]
+  nombre varchar
+  descripcion text
+}
+
+// Tabla de eventos
+Table eventos {
+  id integer [pk, increment]
+  titulo varchar
+  descripcion text
+  fecha datetime
+  duracion integer // en minutos
+  nivel_dificultad varchar
+  punto_partida varchar
+  actividad_id integer [ref: > actividades.id]
+  organizador_id integer [ref: > usuarios.id]
+}
+
+// Relación muchos a muchos entre usuarios y eventos (usuarios inscritos)
+Table usuarios_eventos {
+  usuario_id integer [ref: > usuarios.id]
+  evento_id integer [ref: > eventos.id]
+  inscripcion_fecha datetime [default: `now()`]
+
+  Indexes {
+    (usuario_id, evento_id) [unique]
+  }
 }

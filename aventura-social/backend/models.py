@@ -1,16 +1,26 @@
-# models.py
-
+# backend/models.py
 from flask_sqlalchemy import SQLAlchemy
 
-# Creamos la instancia de SQLAlchemy
 db = SQLAlchemy()
 
-# Ejemplo de modelo
+# Ejemplo: Relación Uno a Muchos
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False)
+    name = db.Column(db.String(100))
+    events = db.relationship('Event', backref='creator', lazy=True)
 
-    def __repr__(self):
-        return f'<User {self.email}>'
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+# Ejemplo: Relación Muchos a Muchos
+participants = db.Table('participants',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('event_id', db.Integer, db.ForeignKey('event.id'))
+)
+
+class GroupActivity(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    users = db.relationship('User', secondary=participants, backref='group_activities')
