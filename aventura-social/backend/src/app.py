@@ -16,6 +16,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Inicialización de extensiones
 db.init_app(app)
 migrate = Migrate(app, db)
+print("Rutas registradas:")
+print(app.url_map)
+
 
 # Registro de rutas
 app.register_blueprint(users_bp, url_prefix='/api/users')
@@ -24,4 +27,4 @@ app.register_blueprint(events_bp, url_prefix='/api/events')
 # Ruta base para testeo rápido
 @app.route('/')
 def index():
-    return {"message": "API Aventura Social funcionando"}
+    return {"message": "API SPORTCONNECT funcionando"}
