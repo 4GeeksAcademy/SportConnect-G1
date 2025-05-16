@@ -1,10 +1,9 @@
-import { useState } from 'react'
-// import './App.css'
-
+import { Profiler, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import CreateEvent from './pages/CreateEvent';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -13,6 +12,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create-event" element={<CreateEvent />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
