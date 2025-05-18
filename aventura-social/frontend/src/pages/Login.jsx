@@ -1,6 +1,8 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/Login.css";
+import { Link } from "react-router-dom";
+
 
 
 const Login = () => {
@@ -30,7 +32,9 @@ const Login = () => {
                         <button type="submit" className="btn btn-light w-100 text-white bg-success">Log in</button>
                     </form>
                     <div className="text-center mt-3">
-                        <a href="#" className="text-success">Create account</a>
+                        <Link to="/register" className=" text-success">
+                        Create account
+                        </Link>
                     </div>
                 </div>
             </div>
