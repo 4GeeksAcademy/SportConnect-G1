@@ -8,6 +8,8 @@ flask = "*"
 flask-migrate = "*"
 flask-sqlalchemy = "*"
 flask-cors = "*"
+requests = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
