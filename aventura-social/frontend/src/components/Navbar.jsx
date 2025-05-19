@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { BsPersonFill } from "react-icons/bs";
+import { BsHouseFill } from "react-icons/bs";
 import "../styles/Navbar.css";
 
 const Navbar = () => {
@@ -14,8 +15,13 @@ const Navbar = () => {
       }}
     >
       <div className="container-fluid d-flex align-items-center">
+        {/* Icono home */}
+        <Link to="/" className="nav-link-persona me-3">
+          <BsHouseFill size={28} />
+        </Link>
+
         {/* Icono persona a la izquierda */}
-        <Link to="/perfil" className="nav-link-persona me-3">
+        <Link to="/profile" className="nav-link-persona me-3">
           <BsPersonFill size={28} />
         </Link>
 
@@ -34,30 +40,30 @@ const Navbar = () => {
 
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="navbar-nav d-flex flex-row gap-4">
-            <Link className="nav-link" to="/Escalada">
+            <Link className="nav-link" to="/feed">
               Escalada
             </Link>
-            <Link className="nav-link" to="/Running">
+            <Link className="nav-link" to="/feed">
               Running
             </Link>
-            <Link className="nav-link" to="/Ciclismo">
+            <Link className="nav-link" to="/feed">
               Ciclismo
             </Link>
-            <Link className="nav-link" to="/Fitness">
+            <Link className="nav-link" to="/feed">
               Fitness
             </Link>
           </div>
         </div>
 
         {/* Logo a la derecha */}
-        <Link className="navbar-brand ms-auto" to="/">
+        <div className="navbar-brand ms-auto">
           <img
             src="/logo_sin_fondo.png"
             alt="SportConnect"
             height="50"
             className="d-inline-block align-top"
           />
-        </Link>
+        </div>
       </div>
     </nav>
   );
