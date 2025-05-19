@@ -4,9 +4,9 @@ import Navbar from "../components/Navbar";
 const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [profile, setProfile] = useState({
-        username: "Nombre de Usuario",
-        email: "usuario@email.com",
-        sports: "Fútbol, Ciclismo, Running"
+        username: "",
+        email: "",
+        sports: ""
     });
 
     const handleChange = (e) => {
@@ -62,7 +62,7 @@ const Profile = () => {
                                 name="username"
                                 value={profile.username}
                                 onChange={handleChange}
-                                placeholder="Nombre de usuario"
+                                placeholder="Name"
                             />
                             <input
                                 type="email"
@@ -70,7 +70,7 @@ const Profile = () => {
                                 name="email"
                                 value={profile.email}
                                 onChange={handleChange}
-                                placeholder="Correo electrónico"
+                                placeholder="ejemplo@gmail.com"
                             />
                             <input
                                 type="text"
