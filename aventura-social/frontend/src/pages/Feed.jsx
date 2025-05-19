@@ -18,7 +18,7 @@ const Feed = () => {
                 isFavorite: false,
                 participants: 3,
             },
-            // Acá se pueden poner más publicaciones
+            // Más publicaciones si querés
         ]);
     }, []);
 
@@ -35,7 +35,15 @@ const Feed = () => {
     };
 
     return (
-        <div className="bg-light min-vh-100">
+        <div
+            className="min-vh-100 d-flex flex-column"
+            style={{
+                backgroundImage: `url("/FondoFeed.png")`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat"
+            }}
+        >
             <Navbar />
 
             <div className="container mt-5">
