@@ -6,12 +6,13 @@ import "../styles/Navbar.css";
 const Navbar = () => {
   return (
     <nav
-      className="navbar navbar-expand-lg navbar-light"
+      className="navbar navbar-expand-lg navbar-light "
       style={{
         backgroundColor: "rgba(255, 255, 255, 0.5)",
         paddingTop: "0.2rem",
         paddingBottom: "0.2rem",
-        position: "relative",
+        position: "abolute",
+        
       }}
     >
       <div className="container-fluid d-flex align-items-center">
