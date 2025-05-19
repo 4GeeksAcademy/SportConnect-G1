@@ -1,33 +1,48 @@
 from flask import request, jsonify
 from src.models import db, Event, User
+from src.services.weather_service import get_weather
+
 
 # Crear un nuevo evento
 def create_event():
     data = request.get_json()
 
-    if not data or not all(k in data for k in ("title", "description", "creator_id")):
+    if not data or not all(k in data for k in ("title", "description", "creator_id", "date", "lat", "lng")):
         return jsonify({"error": "Faltan campos obligatorios"}), 400
+
+    lat = data["lat"]
+    lng = data["lng"]
+    date = data["date"]
+
+    weather = get_weather(lat, lng, date)
 
     event = Event(
         title=data["title"],
         description=data["description"],
-        creator_id=data["creator_id"]
+        creator_id=data["creator_id"],
+        date=date,
+        location=f"{lat}, {lng}",
+        weather=weather
     )
+
     db.session.add(event)
     db.session.commit()
     return jsonify(event.to_dict()), 201
 
+
 # Obtener todos los eventos
 def get_events():
     events = Event.query.all()
-    return jsonify([e.to_dict() for e in events]), 200
+    return jsonify([event.to_dict() for event in events]), 200
+
 
 # Obtener un evento por ID
 def get_event(event_id):
     event = Event.query.get_or_404(event_id)
     return jsonify(event.to_dict()), 200
 
-# Actualizar un evento por ID
+
+# Actualizar un evento
 def update_event(event_id):
     event = Event.query.get_or_404(event_id)
     data = request.get_json()
@@ -36,9 +51,14 @@ def update_event(event_id):
         event.title = data["title"]
     if "description" in data:
         event.description = data["description"]
+    if "date" in data:
+        event.date = data["date"]
+    if "location" in data:
+        event.location = data["location"]
 
     db.session.commit()
     return jsonify(event.to_dict()), 200
+
 
 # Unirse a un evento
 def join_event(event_id):
@@ -61,12 +81,6 @@ def join_event(event_id):
 
     return jsonify({"message": f"Usuario {user.name} se ha unido al evento {event.title}"}), 200
 
-# Eliminar un evento
-def delete_event(event_id):
-    event = Event.query.get_or_404(event_id)
-    db.session.delete(event)
-    db.session.commit()
-    return jsonify({"message": f"Evento '{event.title}' eliminado correctamente"}), 200
 
 # Dejar un evento
 def leave_event(event_id):
@@ -88,3 +102,11 @@ def leave_event(event_id):
         return jsonify({"message": f"El usuario {user_id} ha salido del evento {event_id}"}), 200
     else:
         return jsonify({"error": "El usuario no está inscrito en este evento"}), 400
+
+
+# Eliminar evento
+def delete_event(event_id):
+    event = Event.query.get_or_404(event_id)
+    db.session.delete(event)
+    db.session.commit()
+    return jsonify({"message": f"Evento {event.title} eliminado"}), 200
