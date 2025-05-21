@@ -57,6 +57,7 @@ const Register = () => {
                                 className="form-control"
                                 id="name"
                                 name="name"
+                                placeholder="Name"
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
@@ -69,6 +70,7 @@ const Register = () => {
                                 className="form-control"
                                 id="email"
                                 name="email"
+                                placeholder="Email"
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
@@ -81,6 +83,7 @@ const Register = () => {
                                 className="form-control"
                                 id="password"
                                 name="password"
+                                placeholder="xxxxxx"
                                 value={formData.password}
                                 onChange={handleChange}
                                 required

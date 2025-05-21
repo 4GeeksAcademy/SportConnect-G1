@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 
 
 
+
 const Login = () => {
     return (
         <div style={{ position: "relative", minHeight: "100vh" }}>
@@ -38,7 +39,7 @@ const Login = () => {
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="password" className="form-label text-black">Password</label>
-                                <input type="password" className="form-control" id="password" placeholder="xxxxxxxx" />
+                                <input type="password" className="form-control" id="password" placeholder="xxxxxx" />
                             </div>
                             <button type="submit" className="btn btn-light w-100 text-white bg-success">Log in</button>
                         </form>
