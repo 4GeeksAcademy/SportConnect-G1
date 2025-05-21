@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/Login.css";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import PublicNavbar from "../components/PublicNavbar";
 
 
 
@@ -10,7 +10,7 @@ import Navbar from "../components/Navbar";
 const Login = () => {
     return (
         <div style={{ position: "relative", minHeight: "100vh" }}>
-            <Navbar /> 
+            <PublicNavbar /> 
 
             <div className="container-fluid vh-100 d-flex flex-column flex-md-row p-0">
                 
