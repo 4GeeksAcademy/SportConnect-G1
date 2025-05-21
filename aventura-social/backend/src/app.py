@@ -4,6 +4,9 @@ from flask_migrate import Migrate
 from src.models import db
 from src.routes.users import users_bp
 from src.routes.events import events_bp
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # Inicializa la app y permite peticiones desde otros orígenes
 app = Flask(__name__)
