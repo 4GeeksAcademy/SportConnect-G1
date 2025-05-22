@@ -1,7 +1,7 @@
 // src/pages/Home.jsx
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import PublicNavbar from "../components/PublicNavbar";
 
 const Home = () => {
     return (
@@ -14,7 +14,7 @@ const Home = () => {
                 backgroundRepeat: "no-repeat",
             }}
         >
-            <Navbar />
+            <PublicNavbar />
 
             <div className="container my-auto text-end">
                 <div className="bg-white p-5 rounded shadow" style={{ maxWidth: "400px", marginLeft: "auto", opacity: 0.95 }}>
