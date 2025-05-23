@@ -5,21 +5,12 @@ import CreatePost from "../components/CreatePost";
 
 const Feed = () => {
     const [posts, setPosts] = useState([]);
-    const [isLoggedIn, setIsLoggedIn] = useState(true); // Simulación del login
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [activeTab, setActiveTab] = useState("all");
 
     useEffect(() => {
-        // Acá tiene que ir el fetch a la API para traer las publicaciones
-        setPosts([
-            {
-                id: 1,
-                user: "Juan Pérez",
-                sport: "Fútbol",
-                description: "Partido este sábado a las 17h en el parque",
-                isFavorite: false,
-                participants: 3,
-            },
-            // Más publicaciones si querés
-        ]);
+        // Empieza vacío, sin publicaciones por defecto
+        setPosts([]);
     }, []);
 
     const handleToggleFavorite = (id) => {
@@ -34,11 +25,15 @@ const Feed = () => {
         ));
     };
 
+    const filteredPosts = activeTab === "favorites"
+        ? posts.filter(post => post.isFavorite)
+        : posts;
+
     return (
         <div
-            className="min-vh-100 d-flex flex-column"
+            className="bg-light min-vh-100"
             style={{
-                backgroundImage: `url("/FondoFeed.png")`,
+                backgroundImage: `url('/FondoFeed.png')`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat"
@@ -49,14 +44,33 @@ const Feed = () => {
             <div className="container mt-5">
                 {isLoggedIn && <CreatePost setPosts={setPosts} />}
 
-                {posts.map(post => (
-                    <PostCard
-                        key={post.id}
-                        post={post}
-                        onToggleFavorite={() => handleToggleFavorite(post.id)}
-                        onJoin={() => handleJoin(post.id)}
-                    />
-                ))}
+                <div className="btn-group mb-4">
+                    <button
+                        className={`btn ${activeTab === "all" ? "btn-success" : "btn-outline-success"}`}
+                        onClick={() => setActiveTab("all")}
+                    >
+                        Todos
+                    </button>
+                    <button
+                        className={`btn ${activeTab === "favorites" ? "btn-success" : "btn-outline-success"}`}
+                        onClick={() => setActiveTab("favorites")}
+                    >
+                        Favoritos ❤️
+                    </button>
+                </div>
+
+                {filteredPosts.length === 0 ? (
+                    <p className="text-white">No hay publicaciones.</p>
+                ) : (
+                    filteredPosts.map(post => (
+                        <PostCard
+                            key={post.id}
+                            post={post}
+                            onToggleFavorite={() => handleToggleFavorite(post.id)}
+                            onJoin={() => handleJoin(post.id)}
+                        />
+                    ))
+                )}
             </div>
         </div>
     );

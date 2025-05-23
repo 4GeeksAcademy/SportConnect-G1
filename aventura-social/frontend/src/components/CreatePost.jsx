@@ -2,9 +2,13 @@ import React, { useState } from "react";
 
 const CreatePost = ({ setPosts }) => {
     const [formData, setFormData] = useState({
-        user: "",
-        sport: "",
+        title: "",
         description: "",
+        date: "",
+        time: "",
+        address: "",
+        sport: "",
+        capacity: "",
     });
 
     const handleChange = (e) => {
@@ -23,7 +27,16 @@ const CreatePost = ({ setPosts }) => {
             participants: 0,
         };
         setPosts(prev => [newPost, ...prev]);
-        setFormData({ user: "", sport: "", description: "" });
+        // Limpiar formulario
+        setFormData({
+            title: "",
+            description: "",
+            date: "",
+            time: "",
+            address: "",
+            sport: "",
+            capacity: "",
+        });
     };
 
     return (
@@ -39,21 +52,10 @@ const CreatePost = ({ setPosts }) => {
                 <div className="mb-3">
                     <input
                         type="text"
-                        name="user"
-                        placeholder="Tu nombre"
+                        name="title"
+                        placeholder="Título"
                         className="form-control"
-                        value={formData.user}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <input
-                        type="text"
-                        name="sport"
-                        placeholder="Deporte"
-                        className="form-control"
-                        value={formData.sport}
+                        value={formData.title}
                         onChange={handleChange}
                         required
                     />
@@ -67,6 +69,63 @@ const CreatePost = ({ setPosts }) => {
                         onChange={handleChange}
                         required
                     />
+                </div>
+                <div className="row">
+                    <div className="col-md-6 mb-3">
+                        <input
+                            type="date"
+                            name="date"
+                            className="form-control"
+                            value={formData.date}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                        <input
+                            type="time"
+                            name="time"
+                            className="form-control"
+                            value={formData.time}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                </div>
+                <div className="mb-3">
+                    <input
+                        type="text"
+                        name="address"
+                        placeholder="Dirección"
+                        className="form-control"
+                        value={formData.address}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="row">
+                    <div className="col-md-6 mb-3">
+                        <input
+                            type="text"
+                            name="sport"
+                            placeholder="Deporte"
+                            className="form-control"
+                            value={formData.sport}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                        <input
+                            type="number"
+                            name="capacity"
+                            placeholder="Capacidad"
+                            className="form-control"
+                            value={formData.capacity}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
                 </div>
                 <button type="submit" className="btn btn-success w-100">
                     Publicar
