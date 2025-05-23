@@ -3,6 +3,7 @@ import { FaHeart } from "react-icons/fa";
 
 const PostCard = ({ post, onToggleFavorite, onJoin }) => {
     return (
+
         <div
             className="mb-4 p-4 rounded shadow"
             style={{
@@ -11,7 +12,7 @@ const PostCard = ({ post, onToggleFavorite, onJoin }) => {
             }}
         >
             <div className="d-flex justify-content-between align-items-center mb-2">
-                <h5 className="mb-0">{post.title}</h5>
+                <h5 className="mb-0 text-black ">{post.title}</h5>
                 <button
                     className="btn btn-link text-danger p-0"
                     onClick={onToggleFavorite}
@@ -20,10 +21,10 @@ const PostCard = ({ post, onToggleFavorite, onJoin }) => {
                 </button>
             </div>
 
-            <p className="mb-2 text-muted"><strong>Deporte:</strong> {post.sport}</p>
-            <p className="mb-2"><strong>Descripción:</strong> {post.description}</p>
+            <p className="mb-2 text-muted "><strong>Deporte:</strong> {post.sport}</p>
+            <p className="mb-2 text-black "><strong>Descripción:</strong> {post.description}</p>
 
-            <div className="row mb-2">
+            <div className="row mb-2 text-black">
                 <div className="col-md-6">
                     <p className="mb-1"><strong>Fecha:</strong> {post.date}</p>
                 </div>
@@ -32,17 +33,23 @@ const PostCard = ({ post, onToggleFavorite, onJoin }) => {
                 </div>
             </div>
 
-            <p className="mb-2"><strong>Dirección:</strong> {post.address}</p>
-            <p className="mb-2"><strong>Capacidad:</strong> {post.capacity} personas</p>
+            <p className="mb-2 text-black"><strong>Dirección:</strong> {post.address}</p>
+            <p className="mb-2 text-black"><strong>Capacidad:</strong> {post.capacity} personas</p>
 
             <div className="d-flex justify-content-between align-items-center mt-3">
                 <span className="text-muted">{post.participants} participantes</span>
-                <button className="btn btn-success" onClick={onJoin}>
-                    Anotarme
+                <button
+                    className="btn btn-success"
+                    onClick={onJoin}
+                    disabled={post.participants >= post.capacity}
+                >
+                    {post.participants >= post.capacity ? "Cupo lleno" : "Anotarme"}
                 </button>
+
             </div>
         </div>
     );
 };
+
 
 export default PostCard;
