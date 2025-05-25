@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { registerUser } from "../services/api"; // 👈 Nuevo
 
 const Register = () => {
     const navigate = useNavigate();
@@ -8,17 +9,24 @@ const Register = () => {
         name: "",
         email: "",
         password: "",
-        
     });
+
+    const [error, setError] = useState(null);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        navigate("/profile");
+        try {
+            await registerUser(formData);
+            setError(null);
+            navigate("/profile");
+        } catch (err) {
+            setError("Error al registrar usuario");
+            console.error(err);
+        }
     };
 
     return (
@@ -32,7 +40,6 @@ const Register = () => {
             }}
         >
             <Navbar />
-
             <div
                 className="d-flex justify-content-center align-items-center"
                 style={{ height: "calc(100vh - 80px)" }}
@@ -49,6 +56,11 @@ const Register = () => {
                     <h2 className="text-center mb-4" style={{ color: "#2f7d5c" }}>
                         Crear cuenta
                     </h2>
+                    {error && (
+                        <div className="alert alert-danger" role="alert">
+                            {error}
+                        </div>
+                    )}
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">Nombre</label>
@@ -57,7 +69,6 @@ const Register = () => {
                                 className="form-control"
                                 id="name"
                                 name="name"
-                                placeholder="Name"
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
@@ -70,7 +81,6 @@ const Register = () => {
                                 className="form-control"
                                 id="email"
                                 name="email"
-                                placeholder="Email"
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
@@ -83,7 +93,6 @@ const Register = () => {
                                 className="form-control"
                                 id="password"
                                 name="password"
-                                placeholder="xxxxxx"
                                 value={formData.password}
                                 onChange={handleChange}
                                 required

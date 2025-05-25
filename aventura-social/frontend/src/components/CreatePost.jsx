@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { createEvent } from "../services/api"; // 👈 importa tu función API
 
 const CreatePost = ({ show, onClose, setPosts }) => {
     const [formData, setFormData] = useState({
@@ -15,22 +16,39 @@ const CreatePost = ({ show, onClose, setPosts }) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const newPost = {
-            id: Date.now(),
-            ...formData,
-            isFavorite: false,
-            participants: 0
+        try {
+            const eventPayload = {
+                title: formData.title,
+                description: formData.description,
+                date: `${formData.date}`, // Solo usamos la fecha
+                lat: 41.5912,              // Estáticos por ahora
+                lng: 1.8371,
+                creator_id: 1              // Simulación hasta tener login
+            };
 
-        };
-        setPosts(prev => [newPost, ...prev]);
-        setFormData({
-            title: "", description: "", date: "", time: "",
-            address: "", sport: "", capacity: parseInt(formData.capacity, 10)
+            const newEvent = await createEvent(eventPayload);
 
-        });
-        onClose(); // cerrar modal
+            setPosts(prev => [{
+                id: newEvent.id,
+                user: `Usuario ${newEvent.creator_id}`,
+                sport: formData.sport,
+                description: newEvent.description,
+                isFavorite: false,
+                participants: newEvent.participants?.length || 0
+            }, ...prev]);
+
+            // Limpiar el formulario
+            setFormData({
+                title: "", description: "", date: "", time: "",
+                address: "", sport: "", capacity: ""
+            });
+
+            onClose(); // cerrar modal
+        } catch (err) {
+            console.error("Error al crear evento:", err);
+        }
     };
 
     if (!show) return null;
@@ -71,7 +89,6 @@ const CreatePost = ({ show, onClose, setPosts }) => {
                                         <option value="Ciclismo">Ciclismo</option>
                                         <option value="Fitness">Fitness</option>
                                     </select>
-
                                 </div>
                                 <div className="col-md-6">
                                     <input
